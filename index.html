@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For While Loops</title>
+</head>
+<body>
+    <script>
+        //What are for loops? 
+        // for (initialization; condition; increment/decrement) {
+            //code to be executed
+        //}
+
+        //while (condition) {
+            //code to execute repatedly
+        //}
+
+
+
+        for (let i = 1; i <=10; i++) {
+            console.log(`${i} Mississippi`);
+        }
+        
+        let numbers = [15, 24, 85, 5, 27, 64, 99, 100, 15, 12]
+        console.log(numbers.length);
+        for (let i = 0; i < numbers.length; i++) {
+            if (numbers[i] % 2 === 0) {
+                console.log(numbers[i]);
+            }
+        }
+
+        let j = 1;
+        let sum = 0;
+        while (j <= 10) {
+            if (j % 2 !== 0) {
+                sum += j; // Add j to the sum if it is odd
+            }
+            //sum += j;
+            j++; //Increment j by 1 on each iteration
+        }
+        console.log(sum);
+
+        const finalFourTeams = ['Purdue', 'NC State', 'Alabama', 'UConn'];
+        let userPredictions = [];
+        let actualResults = []; //this would randomly generate for simplicity.
+
+        //collect user predictions
+        for (let i=0; i < finalFourTeams.length; i += 2){
+            let prediction = prompt (`Who will win: ${finalFourTeams[i]} or ${finalFourTeams[i+1]}?`);
+            userPredictions.push(prediction);
+            console.log (`User predicted: ${prediction} for game ${i + 1}`)
+        }
+
+        //Simulate
+        for (let i = 0; i < finalFourTeams.length; i += 2) {
+            let winner = Math.random() < 0.5 ?finalFourTeams[i] : finalFourTeams [i + 1];
+            actualResults.push(winner);
+            console.log(`Actual winner of the game ${i / 2 +1}: ${winner}`);
+        }
+
+        let score = 0;
+        let index = 0; //Initialize the index for the while loop
+
+        while (index < userPredictions.length) {//As long as the index is less than the condition of the legnth of the user prediction
+            if (userPredictions[index] === actualResults[index]) {
+                score++; //Increase the score of the correct perdiction
+                console.log(`Correct prediction for game ${index+1}.`);
+            } else {
+                console.log(`Wrong prediction for game ${index+1}.`);
+            }
+            index++; //Increment index to move to the next prediction
+        }
+
+        console.log(`Your final score: ${score}/${userPredictions.length}`);
+
+
+    </script>
+</body>
+</html>
