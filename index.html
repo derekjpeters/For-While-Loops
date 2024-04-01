@@ -1,80 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For While Loops</title>
-</head>
-<body>
-    <script>
-        //What are for loops? 
-        // for (initialization; condition; increment/decrement) {
-            //code to be executed
-        //}
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>For While Loops</title>
+	</head>
+	<body>
+		<script>
+			// Brief explanation of for and while loops
+			// For loop structure
+			// while loop structure
 
-        //while (condition) {
-            //code to execute repatedly
-        //}
+			// Loop that counts from 1 to 10, logging each number followed by "Mississippi"
+			for (let i = 1; i <= 10; i++) {
+				console.log(`${i} Mississippi`);
+			}
 
+			// Initialize an array of numbers
+			let numbers = [15, 24, 85, 5, 27, 64, 99, 100, 15, 12];
+			console.log(numbers.length); // Log the length of the array
 
+			// Loop through the array 'numbers' and log even numbers to the console
+			for (let i = 0; i < numbers.length; i++) {
+				if (numbers[i] % 2 === 0) {
+					// Checks if the number is even
+					console.log(numbers[i]);
+				}
+			}
 
-        for (let i = 1; i <=10; i++) {
-            console.log(`${i} Mississippi`);
-        }
-        
-        let numbers = [15, 24, 85, 5, 27, 64, 99, 100, 15, 12]
-        console.log(numbers.length);
-        for (let i = 0; i < numbers.length; i++) {
-            if (numbers[i] % 2 === 0) {
-                console.log(numbers[i]);
-            }
-        }
+			// Initialize variables for a sum calculation using a while loop
+			let j = 1;
+			let sum = 0;
+			// Sum odd numbers from 1 to 10
+			while (j <= 10) {
+				if (j % 2 !== 0) {
+					// Check if 'j' is odd
+					sum += j; // Adds 'j' to 'sum' if it is odd
+				}
+				j++; // Increment 'j' by 1 on each iteration
+			}
+			console.log(sum); // Log the final sum
 
-        let j = 1;
-        let sum = 0;
-        while (j <= 10) {
-            if (j % 2 !== 0) {
-                sum += j; // Add j to the sum if it is odd
-            }
-            //sum += j;
-            j++; //Increment j by 1 on each iteration
-        }
-        console.log(sum);
+			// Initialize an array of team names
+			const finalFourTeams = ["Purdue", "NC State", "Alabama", "UConn"];
+			// Initialize arrays to store user predictions and actual results
+			let userPredictions = [];
+			let actualResults = []; // Placeholder for simplicity, meant to be randomly generated
 
-        const finalFourTeams = ['Purdue', 'NC State', 'Alabama', 'UConn'];
-        let userPredictions = [];
-        let actualResults = []; //this would randomly generate for simplicity.
+			// Collect user predictions through prompts and store them
+			for (let i = 0; i < finalFourTeams.length; i += 2) {
+				let prediction = prompt(
+					`Who will win: ${finalFourTeams[i]} or ${finalFourTeams[i + 1]}?`
+				);
+				userPredictions.push(prediction); // Stores user prediction
+				console.log(`User predicted: ${prediction} for game ${i + 1}`);
+			}
 
-        //collect user predictions
-        for (let i=0; i < finalFourTeams.length; i += 2){
-            let prediction = prompt (`Who will win: ${finalFourTeams[i]} or ${finalFourTeams[i+1]}?`);
-            userPredictions.push(prediction);
-            console.log (`User predicted: ${prediction} for game ${i + 1}`)
-        }
+			// Simulate match outcomes and store actual winners
+			for (let i = 0; i < finalFourTeams.length; i += 2) {
+				// Randomly determine the winner for each game
+				let winner =
+					Math.random() < 0.5 ? finalFourTeams[i] : finalFourTeams[i + 1];
+				actualResults.push(winner); // Stores the result
+				console.log(`Actual winner of the game ${i / 2 + 1}: ${winner}`);
+			}
 
-        //Simulate
-        for (let i = 0; i < finalFourTeams.length; i += 2) {
-            let winner = Math.random() < 0.5 ?finalFourTeams[i] : finalFourTeams [i + 1];
-            actualResults.push(winner);
-            console.log(`Actual winner of the game ${i / 2 +1}: ${winner}`);
-        }
+			// Initialize variables for scoring
+			let score = 0;
+			let index = 0; // Initialize index for while loop to compare predictions and results
 
-        let score = 0;
-        let index = 0; //Initialize the index for the while loop
+			// Compare user predictions to actual results and calculate the score
+			while (index < userPredictions.length) {
+				if (userPredictions[index] === actualResults[index]) {
+					score++; // Increment score for correct prediction
+					console.log(`Correct prediction for game ${index + 1}.`);
+				} else {
+					console.log(`Wrong prediction for game ${index + 1}.`);
+				}
+				index++; // Move to the next prediction/result pair
+			}
 
-        while (index < userPredictions.length) {//As long as the index is less than the condition of the legnth of the user prediction
-            if (userPredictions[index] === actualResults[index]) {
-                score++; //Increase the score of the correct perdiction
-                console.log(`Correct prediction for game ${index+1}.`);
-            } else {
-                console.log(`Wrong prediction for game ${index+1}.`);
-            }
-            index++; //Increment index to move to the next prediction
-        }
-
-        console.log(`Your final score: ${score}/${userPredictions.length}`);
-
-
-    </script>
-</body>
+			// Log the user's final score
+			console.log(`Your final score: ${score}/${userPredictions.length}`);
+		</script>
+	</body>
 </html>
