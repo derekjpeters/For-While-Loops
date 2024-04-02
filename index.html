@@ -7,6 +7,26 @@
 	</head>
 	<body>
 		<script>
+			let weather = ["sunny", "rainy", "cloudy", "snowy"];
+
+			// Step 1: Find the index of "cloudy"
+			let cloudyIndex = weather.indexOf("cloudy");
+			const subArray = weather.slice(0, 2);
+
+			if (cloudyIndex !== -1) {
+				// Step 2: Move "cloudy" to the end of the array
+				// This is done by swapping "cloudy" with the last element
+				let temp = weather[weather.length - 1]; // Temporarily store the last element
+				weather[weather.length - 1] = weather[cloudyIndex]; // Move "cloudy" to the last position
+				weather[cloudyIndex] = temp; // Restore the previously last element to the position of "cloudy"
+
+				// Step 3: Use pop() to remove "cloudy"
+				weather.pop();
+			}
+
+			console.log(weather);
+			console.log(subArray);
+
 			// Brief explanation of for and while loops
 			// For loop structure
 			// while loop structure
@@ -46,15 +66,26 @@
 			// Initialize arrays to store user predictions and actual results
 			let userPredictions = [];
 			let actualResults = []; // Placeholder for simplicity, meant to be randomly generated
+			let userScorePrediction = []; // hold the predicted scores
+			let actual = []; //hold the actual scores
 
 			// Collect user predictions through prompts and store them
 			for (let i = 0; i < finalFourTeams.length; i += 2) {
 				let prediction = prompt(
 					`Who will win: ${finalFourTeams[i]} or ${finalFourTeams[i + 1]}?`
 				);
+				let predictedScore = prompt(
+					`Predict the score for ${prediction} (e.g., 85): `
+				);
+				//prompt to predict user scores
 				userPredictions.push(prediction); // Stores user prediction
-				console.log(`User predicted: ${prediction} for game ${i + 1}`);
+				userScorePrediction.push(parseInt(predictedScore, 10)); //Parse predicted score
+				console.log(
+					`User predicted: ${prediction} will win the game with a score of: ${predictedScore}`
+				);
 			}
+			console.log(userPredictions);
+			console.log(userScorePrediction);
 
 			// Simulate match outcomes and store actual winners
 			for (let i = 0; i < finalFourTeams.length; i += 2) {
