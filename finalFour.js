@@ -1,109 +1,124 @@
-let weather = ["sunny", "rainy", "cloudy", "snowy"];
+// Waits for the HTML document to be fully loaded before running the contained code.
+document.addEventListener("DOMContentLoaded", () => {
+	// Initializes an array with the names of the final four teams.
+	const finalFourTeams = ["Purdue", "NC State", "Alabama", "UConn"];
+	// Initializes arrays to hold user predictions, actual results, user score predictions, and actual scores.
+	let userPredictions = [];
+	let actualResults = [];
+	let userScorePrediction = [];
+	let actualScores = [];
 
-			// Step 1: Find the index of "cloudy"
-			let cloudyIndex = weather.indexOf("cloudy");
-			const subArray = weather.slice(0, 2);
+	// Function to initialize the form with options for making predictions.
+	function initializeForm() {
+		// Gets the form element by its ID.
+		const form = document.getElementById("prediction-form");
+		// Clears the form to ensure it starts empty (useful for re-initializing).
+		form.innerHTML = "";
+		// Loops through the teams array two at a time to create matchup options.
+		for (let i = 0; i < finalFourTeams.length; i += 2) {
+			// Creates a new div for each matchup.
+			const matchDiv = document.createElement("div");
+			// Sets the inner HTML of the div to include labels, select options for the teams, and an input for the score prediction.
+			matchDiv.innerHTML = `
+                <label>Who will win: ${finalFourTeams[i]} or ${finalFourTeams[i + 1]}?</label>
+                <select id="team-prediction-${i / 2}">
+                    <option value="${finalFourTeams[i]}">${finalFourTeams[i]}</option>
+                    <option value="${finalFourTeams[i + 1]}">${finalFourTeams[i + 1]}</option>
+                </select>
+                <label>Predict the score for your chosen team:</label>
+                <input type="number" id="score-prediction-${i / 2}" min="0">
+            `;
+			// Appends the matchup div to the form.
+			form.appendChild(matchDiv);
+		}
+	}
 
-			if (cloudyIndex !== -1) {
-				// Step 2: Move "cloudy" to the end of the array
-				// This is done by swapping "cloudy" with the last element
-				let temp = weather[weather.length - 1]; // Temporarily store the last element
-				weather[weather.length - 1] = weather[cloudyIndex]; // Move "cloudy" to the last position
-				weather[cloudyIndex] = temp; // Restore the previously last element to the position of "cloudy"
+	// Function to submit predictions.
+	function submitPredictions() {
+		// Resets the arrays to avoid duplication if predictions are resubmitted.
+		userPredictions = [];
+		userScorePrediction = [];
+		actualResults = [];
+		actualScores = [];
 
-				// Step 3: Use pop() to remove "cloudy"
-				weather.pop();
+		// Gets the divs where user entries and actual results will be displayed.
+		const userEntriesDiv = document.getElementById("user-entries");
+		const actualResultsDiv = document.getElementById("actual-results");
+		// Sets the inner HTML of these divs to headings.
+		userEntriesDiv.innerHTML = "<h2>Your Predictions</h2>";
+		actualResultsDiv.innerHTML = "<h2>Actual Results</h2>";
+
+		// Loops through the number of matchups to collect and display predictions and generate simulated actual results.
+		for (let i = 0; i < finalFourTeams.length / 2; i++) {
+			// Collects the user's team and score predictions.
+			const prediction = document.getElementById(`team-prediction-${i}`).value;
+			const predictedScore = parseInt(document.getElementById(`score-prediction-${i}`).value, 10);
+			// Updates the arrays with these predictions.
+			userPredictions.push(prediction);
+			userScorePrediction.push(predictedScore);
+			// Updates the user entries div with the predictions.
+			userEntriesDiv.innerHTML += `<p>${prediction} will win with a score of ${predictedScore}</p>`;
+
+			// Simulates actual results randomly.
+			const winnerIndex = Math.random() < 0.5 ? i * 2 : i * 2 + 1;
+			const winner = finalFourTeams[winnerIndex];
+			const gameScore = Math.floor(Math.random() * (120 - 65 + 1)) + 65;
+			// Updates the arrays with these simulated results.
+			actualResults.push(winner);
+			actualScores.push(gameScore);
+			// Updates the actual results div with the outcomes.
+			actualResultsDiv.innerHTML += `<p>Game ${i + 1}: ${winner} won with a score of ${gameScore}</p>`;
+		}
+
+		// Makes the calculate score button visible.
+		document.getElementById("calculate-score").style.display = "block";
+	}
+
+	// Function to calculate and display the score based on the accuracy of predictions.
+	function calculateScore() {
+		let score = 0;
+		let index = 0; // Initializes an index for looping through the predictions.
+
+		// Finds or creates a div to display the prediction results.
+		let resultsDiv = document.getElementById('prediction-results');
+		if (!resultsDiv) {
+			resultsDiv = document.createElement('div');
+			resultsDiv.id = 'prediction-results';
+			document.body.appendChild(resultsDiv);
+		}
+
+		resultsDiv.innerHTML = ''; // Clears previous results from the display div.
+
+		// Loops through the predictions to compare with actual results and calculate the score.
+		while (index < userPredictions.length) {
+			let resultMessage;
+			// Checks if the prediction matches the actual result and updates the score and message accordingly.
+			if (userPredictions[index] === actualResults[index]) {
+				score++;
+				resultMessage = `Correct prediction for game ${index + 1}.`;
+			} else {
+				resultMessage = `Wrong prediction for game ${index + 1}.`;
 			}
 
-			console.log(weather);
-			console.log(subArray);
+			// Creates a paragraph element for each game's result and appends it to the results div.
+			const p = document.createElement('p');
+			p.textContent = resultMessage;
+			resultsDiv.appendChild(p);
 
-			// Brief explanation of for and while loops
-			// For loop structure
-			// while loop structure
+			index++;
+		}
 
-			// Loop that counts from 1 to 10, logging each number followed by "Mississippi"
-			for (let i = 1; i <= 10; i++) {
-				console.log(`${i} Mississippi`);
-			}
+		// Displays the total score in a new paragraph element.
+		const scoreP = document.createElement('p');
+		scoreP.textContent = `Your final score: ${score}/${userPredictions.length}`;
+		resultsDiv.appendChild(scoreP);
+	}
 
-			// Initialize an array of numbers
-			let numbers = [15, 24, 85, 5, 27, 64, 99, 100, 15, 12];
-			console.log(numbers.length); // Log the length of the array
+	// Initializes the form when the page loads.
+	initializeForm();
 
-			// Loop through the array 'numbers' and log even numbers to the console
-			for (let i = 0; i < numbers.length; i++) {
-				if (numbers[i] % 2 === 0) {
-					// Checks if the number is even
-					console.log(numbers[i]);
-				}
-			}
+	// Sets event handlers for the submit predictions and calculate score buttons.
+	document.getElementById("submit-predictions").onclick = submitPredictions;
+	document.getElementById("calculate-score").onclick = calculateScore;
+});
 
-			// Initialize variables for a sum calculation using a while loop
-			let j = 1;
-			let sum = 0;
-			// Sum odd numbers from 1 to 10
-			while (j <= 10) {
-				if (j % 2 !== 0) {
-					// Check if 'j' is odd
-					sum += j; // Adds 'j' to 'sum' if it is odd
-				}
-				j++; // Increment 'j' by 1 on each iteration
-			}
-			console.log(sum); // Log the final sum
-
-			// Initialize an array of team names
-			const finalFourTeams = ["Purdue", "NC State", "Alabama", "UConn"];
-			// Initialize arrays to store user predictions and actual results
-			let userPredictions = []; // Holds which team the user predicts will win
-			let actualResults = []; // Placeholder for simplicity, meant to be randomly generated
-			let userScorePrediction = []; // hold the predicted scores
-			let actualScores = []; //hold the actual scores
-
-			// Collect user predictions through prompts and store them
-			for (let i = 0; i < finalFourTeams.length; i += 2) {
-				let prediction = prompt(
-					`Who will win: ${finalFourTeams[i]} or ${finalFourTeams[i + 1]}?`
-				);
-				let predictedScore = prompt(
-					`Predict the score for ${prediction} (e.g., 85): `
-				);
-				//prompt to predict user scores
-				userPredictions.push(prediction); // Stores user prediction
-				userScorePrediction.push(parseInt(predictedScore, 10)); //Parse predicted score
-				console.log(
-					`User predicted: ${prediction} will win the game with a score of: ${predictedScore}`
-				);
-			}
-			console.log(userPredictions);
-			console.log(userScorePrediction);
-
-			// Simulate match outcomes and store actual winners
-			for (let i = 0; i < finalFourTeams.length; i += 2) {
-				// Randomly determine the winner for each game
-				let winner =
-					Math.random() < 0.5 ? finalFourTeams[i] : finalFourTeams[i + 1]; //Math.random() generates a random float between 0 (inclusive) and 1 (exclusive). The comparison < 0.5 essentially gives a 50/50 chance to pick one of two teams as the winner.
-				let gameScore = Math.floor(Math.random() * (120 - 65 +1)) +65;
-				actualResults.push(winner); // Stores the result
-				actualScores.push(gameScore); //Store the simulated result
-
-				console.log(`Actual winner of the game ${i / 2 + 1}}: ${winner} with a score of ${gameScore}`);
-			}
-
-			// Initialize variables for scoring
-			let score = 0;
-			let index = 0; // Initialize index for while loop to compare predictions and results
-
-			// Compare user predictions to actual results and calculate the score
-			while (index < userPredictions.length) {
-				if (userPredictions[index] === actualResults[index]) {
-					score++; // Increment score for correct prediction
-					console.log(`Correct prediction for game ${index + 1}.`);
-				} else {
-					console.log(`Wrong prediction for game ${index + 1}.`);
-				}
-				index++; // Move to the next prediction/result pair
-			}
-
-			// Log the user's final score
-			console.log(`Your final score: ${score}/${userPredictions.length}`);

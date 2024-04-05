@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>For While Loops</title>
-		<link rel="stylesheet" href = "style.css">
-	</head>
-	<body>
-		<button>Button</button>
-		<script src="finalFour.js"></script>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Four Predictions</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Final Four Predictions</h1>
+		<img = src="https://www.ncaa.com/_flysystem/public-s3/2023-04/MFF%20PHX%20Logo.png">
+    </header>
+    <main>
+        <div id="prediction-form">
+            <!-- Match 1 -->
+            <div>
+                <label>Who will win: Purdue or NC State?</label>
+                <select id="team-prediction-0">
+                    <option value="Purdue">Purdue</option>
+                    <option value="NC State">NC State</option>
+                </select>
+                <label>Predict the score for your chosen team:</label>
+                <input type="number" id="score-prediction-0" min="0">
+            </div>
+            <!-- Match 2 -->
+            <div>
+                <label>Who will win: Alabama or UConn?</label>
+                <select id="team-prediction-1">
+                    <option value="Alabama">Alabama</option>
+                    <option value="UConn">UConn</option>
+                </select>
+                <label>Predict the score for your chosen team:</label>
+                <input type="number" id="score-prediction-1" min="0">
+            </div>
+        </div>
+	</div>
+	<section>
+		<button id="submit-predictions">Submit Predictions</button>
+	</section>
+	<section>
+		<div id="user-entries"></div>
+		<div id="actual-results"></div>
+	</section>
+	
+	<section>
+		<button id="calculate-score" style="display:none;">Calculate Score</button>
+	</section>
+	<div id="final-score"></div> 
+	</main>
+    <script src="finalfour.js"></script>
+	<footer>
+		<div id = "prediction-results" style="text-align: center;"></div>
+	</footer>
+</body>
 </html>
